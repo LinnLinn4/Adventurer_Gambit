@@ -72,13 +72,30 @@ public class LuckyWheelScript : MonoBehaviour
 
                         rotating = false;
                         var wonItem = toLook.ElementAt(int.Parse(currentWinningObjectIndex));
-                        if (wonItem.name == "player_attack")
+                        if (wonItem.name == "hp_plus")
                         {
-
+                            Player.health += 5;
 
                         }
+                        else if (wonItem.name == "hp_minus")
+                        {
+                            Player.health -= 5;
 
+                        }
+                        else if (wonItem.name == "attack_plus")
+                        {
+                            Player.attackPower += 1;
 
+                        }
+                        else if (wonItem.name == "attack_minus")
+                        {
+                            Player.attackPower -= 1;
+
+                        }
+                        Debug.Log(wonItem.name);
+
+                        SceneManager.UnloadScene("RandomWheel");
+                        StateManager.isFightFinished = true;
 
                     }
                     break;

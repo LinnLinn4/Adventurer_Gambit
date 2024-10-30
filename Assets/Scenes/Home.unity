@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -400,7 +399,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 106618691}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 168851b5ab3d9884fb101930151a1797, type: 3}
+  m_Script: {fileID: 11500000, guid: 58581c04b8d3b4bc2a25c56607020362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!82 &106618694
@@ -666,7 +665,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 209743149}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 976413ecd31cd9649b3a6fab614badc9, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b52b67a223c848df882d71250f50583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &254111949
@@ -905,13 +904,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 273327673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e9f9855793d13e40b43a423b9a95502, type: 3}
+  m_Script: {fileID: 11500000, guid: a30f880a4606b45c2b12ec2d56a8fc60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 0}
-  sfxButton: {fileID: 175627314}
-  soundOnIcon: {fileID: 403355925}
-  soundOffIcon: {fileID: 1093788082}
+  sfxButton: {fileID: 1449160544}
+  soundOnIcon: {fileID: 656563741}
+  soundOffIcon: {fileID: 1994473047}
 --- !u!4 &273327675
 Transform:
   m_ObjectHideFlags: 0
@@ -4539,11 +4538,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1442961112}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 723c66995520781489acd4b8a37fb848, type: 3}
+  m_Script: {fileID: 11500000, guid: 58581c04b8d3b4bc2a25c56607020362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundOnIcon: {fileID: 1039768347}
-  soundOffIcon: {fileID: 856234779}
 --- !u!1 &1449160542
 GameObject:
   m_ObjectHideFlags: 0
@@ -4711,11 +4708,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1509913627}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 723c66995520781489acd4b8a37fb848, type: 3}
+  m_Script: {fileID: 11500000, guid: 58581c04b8d3b4bc2a25c56607020362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundOnIcon: {fileID: 85239482}
-  soundOffIcon: {fileID: 1973720797}
 --- !u!1 &1559781565
 GameObject:
   m_ObjectHideFlags: 0
@@ -5547,6 +5542,7 @@ GameObject:
   - component: {fileID: 1767285026}
   - component: {fileID: 1767285025}
   - component: {fileID: 1767285024}
+  - component: {fileID: 1767285027}
   m_Layer: 5
   m_Name: Level 1 button
   m_TagString: Untagged
@@ -5630,6 +5626,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1767285027}
+        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
+        m_MethodName: onLoadLevel1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1767285025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5668,6 +5676,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1767285022}
   m_CullTransparentMesh: 1
+--- !u!114 &1767285027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767285022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cad1a4061ce3eee48808d18f6818fbfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1893672086
 GameObject:
   m_ObjectHideFlags: 0

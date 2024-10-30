@@ -95,7 +95,7 @@ public class Wheel : MonoBehaviour
                             TileHilight.toMove = TileHilight.toKill.transform.position;
                             Destroy(TileHilight.toKill);
                             TileHilight.toKill = null;
-                            SceneManager.UnloadScene(2);
+                            SceneManager.UnloadScene("FightScene");
                             StateManager.isFightFinished = true;
                         }
                         if (playerDead)

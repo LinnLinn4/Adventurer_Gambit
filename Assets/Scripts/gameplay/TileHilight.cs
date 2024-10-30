@@ -142,8 +142,25 @@ public class TileHilight : MonoBehaviour
             {
                 Player.powerUps.Add(ps.gameObject.name);
                 Destroy(ps.gameObject);
+                return true;
             }
-
+            if (ps.gameObject != gameObject && (ps.gameObject.name == "Trap" || ps.gameObject.name == "Buff" || ps.gameObject.name == "WheelTile"))
+            {
+                StateManager.deactivatedObjects.Add(GameObject.FindGameObjectWithTag("MainCamera"));
+                StateManager.deactivatedObjects.Add(GameObject.FindGameObjectWithTag("GameScreen"));
+                foreach (var o in StateManager.deactivatedObjects)
+                {
+                    o.SetActive(false);
+                }
+                TileHilight.toMove = ps.gameObject.transform.position;
+                SceneManager.LoadScene("RandomWheel", LoadSceneMode.Additive);
+                return true;
+            }
+            if (ps.gameObject != gameObject && ps.gameObject.name == "CheckPoint")
+            {
+                Player.health = Player.maxHealth;
+                return false;
+            }
         }
         return false;
     }
@@ -157,7 +174,7 @@ public class TileHilight : MonoBehaviour
             o.SetActive(false);
         }
         toKill = g;
-        SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        SceneManager.LoadScene("FightScene", LoadSceneMode.Additive);
         Debug.Log("Enemy");
     }
     public static bool NearlyEqual(double a, double b, double epsilon)
