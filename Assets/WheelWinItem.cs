@@ -22,7 +22,10 @@ public class WheelWinItem : MonoBehaviour
         {
             Wheel.currentWinningObjectIndex = collision.gameObject.name;
         }
-
+        if (LuckyWheelScript.rotating)
+        {
+            LuckyWheelScript.currentWinningObjectIndex = collision.gameObject.name;
+        }
     }
 
 
