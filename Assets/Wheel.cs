@@ -23,7 +23,7 @@ public class Wheel : MonoBehaviour
         foreach (var item in toLook)
         {
             GameObject q = Instantiate(item);
-            q.transform.localScale = new Vector3(30f, 30f, 30f);
+            q.transform.localScale = new Vector3(80f, 80f, 80f);
             q.transform.position = new Vector3((float)(Math.Sin(i * (Math.PI * 2) / toLook.Count) * radius), (float)(Math.Cos(i * (Math.PI * 2) / toLook.Count) * radius), 0f);
             q.name = (i + 1) + q.name;
             GameObject l = Instantiate(line);
