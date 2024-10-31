@@ -12,6 +12,7 @@ public class StateManager : MonoBehaviour
     public GameObject winScreen;
     public GameObject loseScreen;
     public GameObject dialogScreen;
+    public GameObject menuScreen;
     public AudioSource src;
     public AudioClip winSound, loseSound;
 
@@ -37,6 +38,15 @@ public class StateManager : MonoBehaviour
     {
         showDialog = false;
         dialogScreen.SetActive(false);
+    }
+
+    public void showMenuScreen()
+    {
+        menuScreen.SetActive(true);
+    }
+    public void hideMenu()
+    {
+        menuScreen.SetActive(false);
     }
     public void showWinScreen()
     {

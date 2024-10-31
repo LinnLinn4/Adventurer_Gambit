@@ -11,6 +11,8 @@ public class WinLoseManager : MonoBehaviour
         Player.maxHealth = 25;
         Player.attackPower = 5;
         SceneManager.LoadScene(level);
+        StateManager.deactivatedObjects.Clear();
+
     }
     public void continueNext(string level)
     {
@@ -18,6 +20,7 @@ public class WinLoseManager : MonoBehaviour
         Player.maxHealth = 25;
         Player.attackPower = 5;
         SceneManager.LoadScene(level);
+        StateManager.deactivatedObjects.Clear();
     }
     public void goHome()
     {
@@ -25,5 +28,6 @@ public class WinLoseManager : MonoBehaviour
         Player.maxHealth = 25;
         Player.attackPower = 5;
         SceneManager.LoadScene("Home");
+        StateManager.deactivatedObjects.Clear();
     }
 }
