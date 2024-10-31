@@ -127,7 +127,15 @@ public class TileHilight : MonoBehaviour
 
             }
         }
+        foreach (SpriteRenderer ps in GetComponentsInChildren<SpriteRenderer>())
+        {
+            if (ps.gameObject != gameObject && ps.gameObject.name == "hilight")
+            {
+                ps.enabled = false;
+                break;
+            }
 
+        }
     }
     bool onClickTile()
     {
@@ -146,6 +154,7 @@ public class TileHilight : MonoBehaviour
             }
             if (ps.gameObject != gameObject && (ps.gameObject.name == "Trap" || ps.gameObject.name == "Buff" || ps.gameObject.name == "WheelTile"))
             {
+                LuckyWheelScript.useList = ps.gameObject.name == "Trap" ? 0 : ps.gameObject.name == "Buff" ? 1 : 2;
                 StateManager.deactivatedObjects.Add(GameObject.FindGameObjectWithTag("MainCamera"));
                 StateManager.deactivatedObjects.Add(GameObject.FindGameObjectWithTag("GameScreen"));
                 foreach (var o in StateManager.deactivatedObjects)
@@ -154,11 +163,13 @@ public class TileHilight : MonoBehaviour
                 }
                 TileHilight.toMove = ps.gameObject.transform.position;
                 SceneManager.LoadScene("RandomWheel", LoadSceneMode.Additive);
+                Destroy(ps.gameObject);
                 return true;
             }
             if (ps.gameObject != gameObject && ps.gameObject.name == "CheckPoint")
             {
                 Player.health = Player.maxHealth;
+                Destroy(ps.gameObject);
                 return false;
             }
         }

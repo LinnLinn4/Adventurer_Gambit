@@ -8,16 +8,23 @@ using UnityEngine.SceneManagement;
 
 public class LuckyWheelScript : MonoBehaviour
 {
-    public List<GameObject> toLook;
+    public List<GameObject> toLook1;
+    public List<GameObject> toLook2;
+    public List<GameObject> toLook3;
+
     public GameObject toLookObj;
     public GameObject line;
 
 
     static public String currentWinningObjectIndex = "0";
     static public bool rotating = false;
+
+    static public int useList = 0;
+
     // Start is called before the first frame update
     void Start()
     {
+        var toLook = useList == 0 ? toLook1 : useList == 1 ? toLook2 : toLook3;
         var s = (Math.PI) / toLook.Count;
         var i = 0;
         const int radius = 150;
@@ -33,7 +40,7 @@ public class LuckyWheelScript : MonoBehaviour
             l.name = i.ToString();
             Vector3 dir = toLookObj.transform.position - q.transform.position;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            q.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            // q.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
 
 
@@ -61,6 +68,8 @@ public class LuckyWheelScript : MonoBehaviour
 
     void Update()
     {
+        var toLook = useList == 0 ? toLook1 : useList == 1 ? toLook2 : toLook3;
+
         if (rotating)
         {
             foreach (Rigidbody2D ps in GetComponentsInChildren<Rigidbody2D>())
@@ -114,8 +123,9 @@ public class LuckyWheelScript : MonoBehaviour
             {
                 if (ps.gameObject != gameObject && ps.gameObject.name == "bg")
                 {
+                    ps.centerOfMass = new Vector2(0, 0);
                     float force = UnityEngine.Random.Range(10000f, 20000f);
-                    ps.AddTorque(force);
+                    ps.AddTorque(force, ForceMode2D.Impulse);
                     StartCoroutine(h());
                     break;
                 }

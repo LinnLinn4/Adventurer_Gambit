@@ -15,11 +15,7 @@ public class Backgroundmusic : MonoBehaviour
             DontDestroyOnLoad(backgroundMusic);
 
         }
-        else {
-            Destroy(gameObject);
 
-        
-        }
     }
 
 

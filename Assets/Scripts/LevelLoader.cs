@@ -9,4 +9,16 @@ public class LevelLoader : MonoBehaviour
     {
         SceneManager.LoadScene("Level1");
     }
+    public void onLoadLevel2()
+    {
+        SceneManager.LoadScene("Level2");
+    }
+    public void onLoadLevel3()
+    {
+        SceneManager.LoadScene("Level3");
+    }
+    public void onLoadLevel4()
+    {
+        SceneManager.LoadScene("Level4");
+    }
 }

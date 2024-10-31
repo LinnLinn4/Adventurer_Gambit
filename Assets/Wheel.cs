@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +11,11 @@ public class Wheel : MonoBehaviour
     public List<GameObject> toLook;
     public GameObject toLookObj;
     public GameObject line;
+    public GameObject playerDmgIndicator;
+    public GameObject enemyDmgIndicator;
+    public GameObject dmgText;
 
+    public GameObject playerChar;
 
     static public String currentWinningObjectIndex = "0";
     static public bool rotating = false;
@@ -32,7 +37,7 @@ public class Wheel : MonoBehaviour
             l.name = i.ToString();
             Vector3 dir = toLookObj.transform.position - q.transform.position;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            q.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            // q.transform.rotation = Quaternion.AngleAxis(q.transform.rotation.z, Vector3.forward);
 
 
 
@@ -76,13 +81,25 @@ public class Wheel : MonoBehaviour
                         var wonItem = toLook.ElementAt(int.Parse(currentWinningObjectIndex));
                         if (wonItem.name == "player_attack")
                         {
+                            GameObject dmg = Instantiate(dmgText);
+                            dmg.GetComponent<DmgText>().dest = true;
+                            dmg.GetComponent<TextMeshProUGUI>().text = "- 10";
 
                             enemy.health -= Player.attackPower;
                             enemyDead = enemy.health <= 0;
+                            dmg.transform.SetParent(enemyDmgIndicator.transform, false);
+                            EnemySpawn.enemy.GetComponent<Animator>().SetTrigger("got_attacked");
                         }
                         else if (wonItem.name == "enemy_attack")
                         {
+                            GameObject dmg = Instantiate(dmgText);
+
+                            dmg.GetComponent<DmgText>().dest = true;
+                            dmg.GetComponent<TextMeshProUGUI>().text = "- 10";
+
                             Player.health -= enemy.attackPower;
+                            dmg.transform.SetParent(playerDmgIndicator.transform, false);
+                            playerChar.GetComponent<Animator>().SetTrigger("got_attacked");
                         }
                         else if (wonItem.name == "player_damage_double")
                         {
@@ -92,11 +109,7 @@ public class Wheel : MonoBehaviour
 
                         if (enemyDead)
                         {
-                            TileHilight.toMove = TileHilight.toKill.transform.position;
-                            Destroy(TileHilight.toKill);
-                            TileHilight.toKill = null;
-                            SceneManager.UnloadScene("FightScene");
-                            StateManager.isFightFinished = true;
+                            StartCoroutine(enemyDeadFun());
                         }
                         if (playerDead)
                         {
@@ -119,8 +132,9 @@ public class Wheel : MonoBehaviour
             {
                 if (ps.gameObject != gameObject && ps.gameObject.name == "bg")
                 {
-                    float force = UnityEngine.Random.Range(10000f, 20000f);
-                    ps.AddTorque(force);
+                    ps.centerOfMass = new Vector2(0, 0);
+                    float force = UnityEngine.Random.Range(10000f, 25000f);
+                    ps.AddTorque(force, ForceMode2D.Impulse);
                     StartCoroutine(h());
                     break;
                 }
@@ -132,5 +146,13 @@ public class Wheel : MonoBehaviour
         yield return new WaitForSeconds(1);
         rotating = true;
     }
-
+    IEnumerator enemyDeadFun()
+    {
+        yield return new WaitForSeconds(1);
+        TileHilight.toMove = TileHilight.toKill.transform.position;
+        Destroy(TileHilight.toKill);
+        TileHilight.toKill = null;
+        SceneManager.UnloadScene("FightScene");
+        StateManager.isFightFinished = true;
+    }
 }
