@@ -26,7 +26,7 @@ public class Wheel : MonoBehaviour
     {
         var s = (Math.PI) / toLook.Count;
         var i = 0;
-        const int radius = 150;
+        const int radius = 125;
         foreach (var item in toLook)
         {
             GameObject q = Instantiate(item);
@@ -85,9 +85,35 @@ public class Wheel : MonoBehaviour
                         {
                             GameObject dmg = Instantiate(dmgText);
                             dmg.GetComponent<DmgText>().dest = true;
-                            dmg.GetComponent<TextMeshProUGUI>().text = "- 10";
+                            dmg.GetComponent<TextMeshProUGUI>().text = "- " + Player.attackPower;
 
                             enemy.health -= Player.attackPower;
+                            enemyDead = enemy.health <= 0;
+                            dmg.transform.SetParent(enemyDmgIndicator.transform, false);
+                            EnemySpawn.enemy.GetComponent<Animator>().SetTrigger("got_attacked");
+                            src.clip = attackedSound;
+                            src.Play();
+                        }
+                        else if (wonItem.name == "player_attack_2")
+                        {
+                            GameObject dmg = Instantiate(dmgText);
+                            dmg.GetComponent<DmgText>().dest = true;
+                            dmg.GetComponent<TextMeshProUGUI>().text = "- " + (Player.attackPower * 2) + " (crit)";
+
+                            enemy.health -= (Player.attackPower * 2);
+                            enemyDead = enemy.health <= 0;
+                            dmg.transform.SetParent(enemyDmgIndicator.transform, false);
+                            EnemySpawn.enemy.GetComponent<Animator>().SetTrigger("got_attacked");
+                            src.clip = attackedSound;
+                            src.Play();
+                        }
+                        else if (wonItem.name == "player_attack_half")
+                        {
+                            GameObject dmg = Instantiate(dmgText);
+                            dmg.GetComponent<DmgText>().dest = true;
+                            dmg.GetComponent<TextMeshProUGUI>().text = "- " + (Player.attackPower / 2);
+
+                            enemy.health -= Player.attackPower / 2;
                             enemyDead = enemy.health <= 0;
                             dmg.transform.SetParent(enemyDmgIndicator.transform, false);
                             EnemySpawn.enemy.GetComponent<Animator>().SetTrigger("got_attacked");
@@ -99,7 +125,7 @@ public class Wheel : MonoBehaviour
                             GameObject dmg = Instantiate(dmgText);
 
                             dmg.GetComponent<DmgText>().dest = true;
-                            dmg.GetComponent<TextMeshProUGUI>().text = "- 10";
+                            dmg.GetComponent<TextMeshProUGUI>().text = "- " + enemy.attackPower;
 
                             Player.health -= enemy.attackPower;
                             playerDead = Player.health <= 0;
@@ -108,9 +134,19 @@ public class Wheel : MonoBehaviour
                             src.clip = attackedSound;
                             src.Play();
                         }
-                        else if (wonItem.name == "player_damage_double")
+                        else if (wonItem.name == "enemy_attack_2")
                         {
-                            Player.attackPower = Player.attackPower * 2;
+                            GameObject dmg = Instantiate(dmgText);
+
+                            dmg.GetComponent<DmgText>().dest = true;
+                            dmg.GetComponent<TextMeshProUGUI>().text = "- " + (int)(enemy.attackPower * 1.5) + " (crit)";
+
+                            Player.health -= (int)(enemy.attackPower * 1.5);
+                            playerDead = Player.health <= 0;
+                            dmg.transform.SetParent(playerDmgIndicator.transform, false);
+                            playerChar.GetComponent<Animator>().SetTrigger("got_attacked");
+                            src.clip = attackedSound;
+                            src.Play();
                         }
 
                         if (enemyDead)

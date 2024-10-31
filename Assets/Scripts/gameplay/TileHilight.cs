@@ -173,6 +173,7 @@ public class TileHilight : MonoBehaviour
             if (ps.gameObject != gameObject && ps.gameObject.name == "CheckPoint")
             {
                 Player.health = Player.maxHealth;
+                GameObject.Find("StateManager").GetComponent<StateManager>().showDialogScreen("You make it to the checkpoint! All your health has been restored!");
                 Destroy(ps.gameObject);
                 return false;
             }

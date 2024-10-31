@@ -27,11 +27,11 @@ public class LuckyWheelScript : MonoBehaviour
         var toLook = useList == 0 ? toLook1 : useList == 1 ? toLook2 : toLook3;
         var s = (Math.PI) / toLook.Count;
         var i = 0;
-        const int radius = 150;
+        const int radius = 125;
         foreach (var item in toLook)
         {
             GameObject q = Instantiate(item);
-            q.transform.localScale = new Vector3(80f, 80f, 80f);
+            q.transform.localScale = new Vector3(50f, 50f, 50f);
             q.transform.position = new Vector3((float)(Math.Sin(i * (Math.PI * 2) / toLook.Count) * radius), (float)(Math.Cos(i * (Math.PI * 2) / toLook.Count) * radius), 0f);
             q.name = (i + 1) + q.name;
             GameObject l = Instantiate(line);
@@ -84,30 +84,52 @@ public class LuckyWheelScript : MonoBehaviour
                         var wonItem = toLook.ElementAt(int.Parse(currentWinningObjectIndex));
                         if (wonItem.name == "hp_plus")
                         {
-                            Player.health += 5;
-                            dString = "You fall into a trap. You lost 5 HP!";
-
+                            var h = UnityEngine.Random.Range(1, 5f);
+                            Player.health += (int)h;
+                            dString = "You found a potion. You heal " + (int)h + " HP!";
                         }
                         else if (wonItem.name == "hp_minus")
                         {
-                            Player.health -= 5;
-
-                            dString = "You found a potion. You gain 5 HP!";
+                            var h = UnityEngine.Random.Range(1, 5f);
+                            Player.health -= (int)h;
+                            dString = "You fall into a trap. You lost " + (int)h + " HP!";
                         }
                         else if (wonItem.name == "attack_plus")
                         {
-                            Player.attackPower += 1;
-
-                            dString = "You found a new sword. Your attack power got increased!";
-
+                            var h = UnityEngine.Random.Range(1f, 3f);
+                            Player.attackPower += (int)h;
+                            dString = "You found a new sword. You gain " + (int)h + " attack power!";
                         }
                         else if (wonItem.name == "attack_minus")
                         {
-                            Player.attackPower -= 1;
-
-                            dString = "You lost your sword. Your attack power got reduced!";
+                            var h = UnityEngine.Random.Range(1f, 2.2f);
+                            Player.attackPower -= (int)h;
+                            dString = "You broke your sword. You lost " + (int)h + " attack power!";
                         }
-
+                        else if (wonItem.name == "heal")
+                        {
+                            var h = UnityEngine.Random.Range(5f, 11f);
+                            Player.health += (int)h;
+                            dString = "A traveler preist healed you. You heal " + (int)h + " HP!";
+                        }
+                        else if (wonItem.name == "teleport")
+                        {
+                            Player.powerUps.Add("teleport");
+                            dString = "A wizard said he will teleport you. You gain one turn to see and teleport 2 spaces!";
+                        }
+                        else if (wonItem.name == "attack_power_big")
+                        {
+                            var h = UnityEngine.Random.Range(5f, 9f);
+                            Player.attackPower += (int)h;
+                            dString = "You found a shiny sword. You gain " + (int)h + " attack power!";
+                        }
+                        else if (wonItem.name == "max_hp_big")
+                        {
+                            var h = UnityEngine.Random.Range(3f, 6f);
+                            Player.maxHealth += (int)h;
+                            Player.health += (int)h;
+                            dString = "You ate a random mushroom. You gain and healed" + (int)h + "MAX HP!";
+                        }
                         SceneManager.UnloadScene("RandomWheel");
                         StateManager.isFightFinished = true;
                         GameObject.Find("StateManager").GetComponent<StateManager>().showDialogScreen(dString);
