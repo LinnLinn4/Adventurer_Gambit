@@ -13,7 +13,6 @@ public class Backgroundmusic : MonoBehaviour
         {
             backgroundMusic = this;
             DontDestroyOnLoad(backgroundMusic);
-
         }
 
     }

@@ -9,6 +9,8 @@ public class TileHilight : MonoBehaviour
 {
     static public GameObject toKill;
     static public Vector3? toMove;
+    public AudioSource src;
+    public AudioClip moveSound;
 
     private void Update()
     {
@@ -22,7 +24,7 @@ public class TileHilight : MonoBehaviour
         var xDiff = oldPos.x - newPos.x;
         var yDiff = oldPos.y - newPos.y;
 
-        bool isFogActive = !((xDiff <= 1.16f && xDiff >= -1.16f) && (yDiff <= 1.16f && yDiff >= -1.16f));
+        bool isFogActive = !((xDiff <= 1.16f && xDiff >= -1.16f) && (yDiff <= 1.2f && yDiff >= -1.2f));
         bool isFogActive2 = !((xDiff <= 2.4f && xDiff >= -2.4f) && (yDiff <= 2.4f && yDiff >= -2.4f));
 
 
@@ -141,6 +143,8 @@ public class TileHilight : MonoBehaviour
     {
         foreach (SpriteRenderer ps in GetComponentsInChildren<SpriteRenderer>())
         {
+            src.clip = moveSound;
+            src.Play();
             if (ps.gameObject != gameObject && ps.gameObject.tag == "Enemy")
             {
                 onClickEnemyTile(ps.gameObject);
@@ -150,7 +154,7 @@ public class TileHilight : MonoBehaviour
             {
                 Player.powerUps.Add(ps.gameObject.name);
                 Destroy(ps.gameObject);
-                return true;
+                return false;
             }
             if (ps.gameObject != gameObject && (ps.gameObject.name == "Trap" || ps.gameObject.name == "Buff" || ps.gameObject.name == "WheelTile"))
             {
@@ -172,6 +176,14 @@ public class TileHilight : MonoBehaviour
                 Destroy(ps.gameObject);
                 return false;
             }
+            if (ps.gameObject != gameObject && ps.gameObject.name == "WinFlag")
+            {
+
+                Destroy(ps.gameObject);
+                GameObject.Find("StateManager").GetComponent<StateManager>().showWinScreen();
+                return false;
+            }
+
         }
         return false;
     }

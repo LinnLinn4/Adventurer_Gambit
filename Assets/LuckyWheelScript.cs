@@ -80,31 +80,38 @@ public class LuckyWheelScript : MonoBehaviour
                     {
 
                         rotating = false;
+                        var dString = "";
                         var wonItem = toLook.ElementAt(int.Parse(currentWinningObjectIndex));
                         if (wonItem.name == "hp_plus")
                         {
                             Player.health += 5;
+                            dString = "You fall into a trap. You lost 5 HP!";
 
                         }
                         else if (wonItem.name == "hp_minus")
                         {
                             Player.health -= 5;
 
+                            dString = "You found a potion. You gain 5 HP!";
                         }
                         else if (wonItem.name == "attack_plus")
                         {
                             Player.attackPower += 1;
+
+                            dString = "You found a new sword. Your attack power got increased!";
 
                         }
                         else if (wonItem.name == "attack_minus")
                         {
                             Player.attackPower -= 1;
 
+                            dString = "You lost your sword. Your attack power got reduced!";
                         }
-                        Debug.Log(wonItem.name);
 
                         SceneManager.UnloadScene("RandomWheel");
                         StateManager.isFightFinished = true;
+                        GameObject.Find("StateManager").GetComponent<StateManager>().showDialogScreen(dString);
+
 
                     }
                     break;
@@ -124,7 +131,10 @@ public class LuckyWheelScript : MonoBehaviour
                 if (ps.gameObject != gameObject && ps.gameObject.name == "bg")
                 {
                     ps.centerOfMass = new Vector2(0, 0);
-                    float force = UnityEngine.Random.Range(10000f, 20000f);
+                    ps.angularDrag = 1 + UnityEngine.Random.Range(0, 1f);
+                    ps.gameObject.transform.rotation = Quaternion.identity;
+                    float force = UnityEngine.Random.Range(0, 2000f) + 200f;
+                    Debug.Log(force);
                     ps.AddTorque(force, ForceMode2D.Impulse);
                     StartCoroutine(h());
                     break;

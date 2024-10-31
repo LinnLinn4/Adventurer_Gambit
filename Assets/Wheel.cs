@@ -16,6 +16,8 @@ public class Wheel : MonoBehaviour
     public GameObject dmgText;
 
     public GameObject playerChar;
+    public AudioSource src;
+    public AudioClip attackedSound;
 
     static public String currentWinningObjectIndex = "0";
     static public bool rotating = false;
@@ -89,6 +91,8 @@ public class Wheel : MonoBehaviour
                             enemyDead = enemy.health <= 0;
                             dmg.transform.SetParent(enemyDmgIndicator.transform, false);
                             EnemySpawn.enemy.GetComponent<Animator>().SetTrigger("got_attacked");
+                            src.clip = attackedSound;
+                            src.Play();
                         }
                         else if (wonItem.name == "enemy_attack")
                         {
@@ -98,13 +102,15 @@ public class Wheel : MonoBehaviour
                             dmg.GetComponent<TextMeshProUGUI>().text = "- 10";
 
                             Player.health -= enemy.attackPower;
+                            playerDead = Player.health <= 0;
                             dmg.transform.SetParent(playerDmgIndicator.transform, false);
                             playerChar.GetComponent<Animator>().SetTrigger("got_attacked");
+                            src.clip = attackedSound;
+                            src.Play();
                         }
                         else if (wonItem.name == "player_damage_double")
                         {
                             Player.attackPower = Player.attackPower * 2;
-                            playerDead = Player.health <= 0;
                         }
 
                         if (enemyDead)
@@ -113,7 +119,7 @@ public class Wheel : MonoBehaviour
                         }
                         if (playerDead)
                         {
-
+                            GameObject.Find("StateManager").GetComponent<StateManager>().showLoseScreen();
                         }
                     }
                     break;
@@ -133,7 +139,10 @@ public class Wheel : MonoBehaviour
                 if (ps.gameObject != gameObject && ps.gameObject.name == "bg")
                 {
                     ps.centerOfMass = new Vector2(0, 0);
-                    float force = UnityEngine.Random.Range(10000f, 25000f);
+                    ps.angularDrag = 1 + UnityEngine.Random.Range(0, 1f);
+                    ps.gameObject.transform.rotation = Quaternion.identity;
+                    float force = UnityEngine.Random.Range(0, 2000f) + 200f;
+                    Debug.Log(force);
                     ps.AddTorque(force, ForceMode2D.Impulse);
                     StartCoroutine(h());
                     break;
