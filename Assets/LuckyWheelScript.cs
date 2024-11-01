@@ -115,7 +115,7 @@ public class LuckyWheelScript : MonoBehaviour
                         else if (wonItem.name == "teleport")
                         {
                             Player.powerUps.Add("teleport");
-                            dString = "A wizard said he will teleport you. You gain one turn to see and teleport 2 spaces!";
+                            dString = "You found a magic portal. You gain one turn to see and teleport 2 spaces!";
                         }
                         else if (wonItem.name == "attack_power_big")
                         {
@@ -128,8 +128,9 @@ public class LuckyWheelScript : MonoBehaviour
                             var h = UnityEngine.Random.Range(3f, 6f);
                             Player.maxHealth += (int)h;
                             Player.health += (int)h;
-                            dString = "You ate a random mushroom. You gain and healed" + (int)h + "MAX HP!";
+                            dString = "You ate a random mushroom. You gain and healed " + (int)h + "MAX HP!";
                         }
+
                         SceneManager.UnloadScene("RandomWheel");
                         StateManager.isFightFinished = true;
                         GameObject.Find("StateManager").GetComponent<StateManager>().showDialogScreen(dString);

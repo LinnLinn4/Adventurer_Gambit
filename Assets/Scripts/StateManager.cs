@@ -17,8 +17,8 @@ public class StateManager : MonoBehaviour
     public AudioClip winSound, loseSound;
 
     // static public string dialogString;
-    bool showDialog = false;
-
+    public bool showDialog = false;
+    public bool showMenu = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,10 +42,16 @@ public class StateManager : MonoBehaviour
 
     public void showMenuScreen()
     {
+        if (showMenu)
+        {
+            return;
+        }
+        showMenu = true;
         menuScreen.SetActive(true);
     }
     public void hideMenu()
     {
+        showMenu = false;
         menuScreen.SetActive(false);
     }
     public void showWinScreen()

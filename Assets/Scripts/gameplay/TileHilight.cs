@@ -69,6 +69,10 @@ public class TileHilight : MonoBehaviour
 
     void OnMouseOver()
     {
+        if (GameObject.Find("StateManager").GetComponent<StateManager>().showDialog || GameObject.Find("StateManager").GetComponent<StateManager>().showMenu)
+        {
+            return;
+        }
         foreach (SpriteRenderer ps in GetComponentsInChildren<SpriteRenderer>())
         {
             if (ps.gameObject != gameObject && ps.gameObject.name == "hilight")
@@ -119,6 +123,10 @@ public class TileHilight : MonoBehaviour
 
             if (Math.Round(xDiff) <= 0)
             {
+                if (GameObject.Find("StateManager").GetComponent<StateManager>().showDialog || GameObject.Find("StateManager").GetComponent<StateManager>().showMenu)
+                {
+                    return;
+                }
                 Player.powerUps.Remove("teleport");
                 bool isEnemy = onClickTile();
                 if (!isEnemy)
